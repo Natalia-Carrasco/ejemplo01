@@ -1,0 +1,51 @@
+<div class="card border-primary mb-3 text-center">
+    <div class="card-header">Lista de Productos</div>
+    <div class="card-body text-primary">
+        <div class="table-responsive">
+            @if (products && products.length) {
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            <button class="btn btn-primary" (click)="toggleImage()">
+                                <i-bs name="eye-fill"></i-bs>
+                                {{showImage ? 'Ocultar' : 'Mostrar'}} Imagenes
+                            </button>
+                        </th>
+                        <th>Producto</th>
+                        <th>Codigo</th>
+                        <th>Disponible</th>
+                        <th>Precio</th>
+                        <th>Rating</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tr *ngFor="let product of products">
+                    <td><img *ngIf="showImage" [src]="product.imageUrl | default:'../../assets/sin-imagen.png'"
+                            [title]='product.productName' [style.width.px]='imageWidth' [style.margin.px]='imageMargin'>
+                    </td>
+                    <td>{{product.productName}}</td>
+                    <td>{{product.productCode}}</td>
+                    <td>{{product.releaseDate | date: 'dd/MM/yyyy'}}</td>
+                    <td>{{product.price | currency:'CLP':'symbol-narrow':'1.0-0'}}</td>
+                    <td><app-star [rating]="product.starRating"></app-star></td>
+                    <td>
+                        <button class="btn btn-success" (click)="viewProduct(product)">
+                            <i-bs name="eye-fill"></i-bs> Ver
+                        </button>
+                        &nbsp;
+                        <button class="btn btn-warning" (click)="updateProduct(product.productId, product)">
+                            <i-bs name="pencil-fill"></i-bs> Editar
+                        </button>
+                        &nbsp;
+                        <button class="btn btn-danger" (click)="deleteProduct(product.productId)">
+                            <i-bs name="trash3-fill"></i-bs> Borrar </button>
+                    </td>
+                </tr>
+            </table>
+            } @else {
+            <p>No Hay Productos</p>
+            }
+        </div>
+    </div>
+</div>
